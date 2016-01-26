@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>80</x>
+      <y>0</y>
+      <w>270</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>
+com::Connector
+--
++host: String
++username:String
++password:String
++port:String
++DBType:String
+--
++testConnection():boolean
++getJDBCTemplate():JDBCTemplate
++getConnection():Conn
++getDBInfo():HashMap
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>440</x>
+      <y>10</y>
+      <w>390</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>com::querier
+--
+jdbcTemplate:JDBCTemplate
+--
++getTables():List
++getTableData():DefaultTableModel
++getAllTableData():DefaultTableModel
++getSomeTableDataByCondition():DefaultTableModel
++getTableStructure():List</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>690</x>
+      <y>320</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Package::FileProcessor
+--
+fileName:String
+fileContent:String
+filePath:String
+--
++getter()
++setter()
++writeFile():boolean
++readFile():String
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>440</x>
+      <y>320</y>
+      <w>220</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>
+Package::CompareTool
+--
+tableJson:List
+tableJson1:List
+viewJson:List
+viewJson1:List
+indexJson:List
+indexJson1:List
+procedureJson:List
+procedureJson1:List
+triggerJson:List
+triggerJson1:List
+--
++getter()
++setter()
++compareTable():
++compareView():
++compareIndex():
++compareProdure():
++compareTrigger():
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>80</x>
+      <y>320</y>
+      <w>220</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Package::DBInfo
+--
++host: String
++username:String
++password:String
++DBType:String
+
++DBVersion:String
++DBAccount:HashMap
++DBInfo:HashMap
++DBFileInfo:Hash
++DBPort:String
++DBHostName:String
++hardDiskInfo:HashMap
+--
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>440</x>
+      <y>740</y>
+      <w>220</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Package::Synchronise
+--
+SQL:String
+rebuildOrAlter:boolean
+--
++executeSQL():boolean
++sortSQL():String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>520</x>
+      <y>620</y>
+      <w>50</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>520</x>
+      <y>160</y>
+      <w>110</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>90;30;30;160</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>700</x>
+      <y>160</y>
+      <w>120</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;100;160</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>320</x>
+      <y>60</y>
+      <w>140</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;120;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>170</x>
+      <y>150</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+</diagram>
