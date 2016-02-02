@@ -6,6 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -116,42 +117,52 @@ public class Querier {
 		return getTableData(tableName, sql);
 	}
 
-	public void getDBStructure() {
+	public TableList getDBStructure() {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
 
-		List tables = this.getTables();
 		String tableName = null;
-
-		List tmpTableList = new ArrayList<Table>();
+		// 获取所有的表名
+		List tables = this.getTables();
+		// 所有表，HashMap相互嵌套，<表名,<字段名，字段属性>>
+		HashMap tmpTableMap = new HashMap<String, HashMap>();
 		try {
 			conn = jdbcTemplate.getDataSource().getConnection();
 			stmt = conn.createStatement();
 			for (int i = 0; i < tables.size(); i++) {
-				Table table = new Table();
+				// 第一步，获取表名
 				tableName = tables.get(i).toString();
 				String sql = "select * from " + tableName;
 				if (tableName != null) {
-					System.out.println(sql);
 					rs = stmt.executeQuery(sql);
 					ResultSetMetaData rsd = rs.getMetaData();
 					int number = rsd.getColumnCount();
 
-					// 添加字段的属性
-					List fieldList = new ArrayList<>(number);
+					// 添加某张表的所有字段到fieldList,fieldList是一个hashmap对象
+					Table table = new Table();
+					List fieldList = new ArrayList<String>();
+					HashMap fieldMap = new HashMap<>();
 					for (int num = 0; num < number; num++) {
 						FieldJson fj = new FieldJson();
+						// 第二步，获取字段名
 						fj.setTableName(tableName);
+						// 第三步，获取字段属性
+						fieldList.add(rsd.getColumnLabel(num + 1));
 						fj.setFieldName(rsd.getColumnLabel(num + 1));
 						fj.setFieldType(rsd.getColumnTypeName(num + 1));
 						fj.setFieldLength(rsd.getColumnDisplaySize(num + 1));
 						fj.setMandatory(rsd.isNullable(num + 1) == 1 ? true : false);
-						fieldList.add(fj);
+						fieldMap.put(rsd.getColumnLabel(num + 1), fj);
 					}
-					table.setTableName(tableName);
 					table.setFieldList(fieldList);
-					tmpTableList.add(table);
+					table.setFieldMap(fieldMap);
+					// 装载单张表
+					tmpTableMap.put(tableName, table);
+					/*
+					 * table.setTableName(tableName);
+					 * table.setFieldList(fieldList); tmpTableList.add(table);
+					 */
 				}
 			}
 		} catch (SQLException e) {
@@ -161,11 +172,10 @@ public class Querier {
 			this.closeDBObject(rs);
 			this.closeDBObject(conn);
 		}
-		FileProcessor fp = new FileProcessor();
 		TableList tl = new TableList();
-		tl.setTables(tmpTableList);
-		fp.json2file(tl);
-
+		tl.setTablesList(tables);
+		tl.setTablesMap(tmpTableMap);
+		return tl;
 	}
 
 	public void closeDBObject(Object o) {

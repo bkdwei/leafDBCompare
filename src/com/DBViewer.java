@@ -17,6 +17,7 @@ import com.eventListener.ItemStatusChange;
 import com.eventListener.SearchTextChange;
 import com.eventListener.TableColSelect;
 import com.model.TableList;
+import com.utils.CompareTool;
 
 @Service
 public class DBViewer {
@@ -41,6 +42,8 @@ public class DBViewer {
 	private TableColSelect tableColSelect;
 	@Autowired
 	private TableList tableList;
+	@Autowired
+	private CompareTool compareTool;
 
 	public void testConnection() {
 		int testResult = dbDao.testConnection();
@@ -80,10 +83,14 @@ public class DBViewer {
 		dbViewer.ui.compose();
 
 		dbViewer.init();
-	/*	dbViewer.dbDao.exportDBStructure();
-		dbViewer.dbDao.json2file(dbViewer.tableList);
-*/		dbViewer.querier.getDBStructure();
-		dbViewer.fileProcessor.readFile("/tmp/123");
+//		dbViewer.dbDao.exportDBStructure();
+//		dbViewer.dbDao.json2file(dbViewer.tableList);
+	
+		TableList tl1 = dbViewer.querier.getDBStructure();
+		
+		String jsonTableList =dbViewer.fileProcessor.readFile("/tmp/123");
+		TableList tl2 =  dbViewer.fileProcessor.json2Object(jsonTableList);
+		dbViewer.compareTool.compareTables(tl1, tl2);
 
 	}
 

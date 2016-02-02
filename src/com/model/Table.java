@@ -1,20 +1,26 @@
 package com.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Table {
-	private String tableName;
-	private List FieldList;
-	public String getTableName() {
-		return tableName;
-	}
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
+	private List fieldList;
+	private HashMap fieldMap;
+
 	public List getFieldList() {
-		return FieldList;
+		return fieldList;
 	}
+
 	public void setFieldList(List fieldList) {
-		FieldList = fieldList;
+		this.fieldList = fieldList;
 	}
+
+	public HashMap getFieldMap() {
+		return fieldMap;
+	}
+
+	public void setFieldMap(HashMap fieldMap) {
+		this.fieldMap = fieldMap;
+	}
+
 }

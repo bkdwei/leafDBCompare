@@ -6,12 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.model.Table;
 import com.model.TableList;
 
 @Service
@@ -34,7 +32,7 @@ public class FileProcessor {
 			while ((tempString = reader.readLine()) != null) {
 				// 显示行号
 				fileContent += tempString;
-				//System.out.println("line " + line + ": " + tempString);
+				// System.out.println("line " + line + ": " + tempString);
 				line++;
 			}
 			reader.close();
@@ -50,18 +48,19 @@ public class FileProcessor {
 		}
 
 		return fileContent;
-		
+
 	}
 
 	public void json2file(TableList tl) {
 		String tableStructureInfo = JSON.toJSONString(tl, true);
-//		System.out.println(tableStructureInfo);
-//		System.out.println(fileContent);
+		// System.out.println(tableStructureInfo);
+		// System.out.println(fileContent);
 		TableList tl1 = JSON.parseObject(tableStructureInfo, TableList.class);
-		List ll =tl1.getTables();
-		Object tt =(Object) ll.get(2);
-		System.out.println(tt.toString());
-		
+/*		List ll = tl1.getTablesList();
+		String tt = ll.get(0).toString();
+		Table me = JSON.parseObject(tt, Table.class);
+		System.out.println("get:" + me.getTableName());*/
+
 		File fTableStructureInfo = new File("/tmp/123");
 		if (!fTableStructureInfo.exists()) {
 			try {
@@ -82,6 +81,10 @@ public class FileProcessor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public TableList json2Object(String jsonTableList) {
+		return JSON.parseObject(jsonTableList, TableList.class);
 	}
 
 }

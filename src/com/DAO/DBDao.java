@@ -22,15 +22,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.model.TableJson;
 import com.model.TableList;
 
 @Service
 public class DBDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	@Autowired
-	private TableJson tableJson;
 	@Autowired
 	private TableList tableList;
 	String driverName = null;
@@ -202,7 +199,7 @@ public class DBDao {
 		String tableName = "";
 
 		List tables = this.getTables();
-		List structureInfo = new ArrayList<TableJson>();
+//		List structureInfo = new ArrayList<TableJson>();
 		for (int i = 0; i < tables.size(); i++) {
 			tableName = tables.get(i).toString();
 			String sql = "select * from " + tableName;
@@ -231,7 +228,7 @@ public class DBDao {
 /*					tableJson.setTableName(tableName);
 					tableJson.setTypeHashMap(typeMap);
 					tableJson.setLengthHashMap(lengthMap);*/
-					structureInfo.add(filedList);
+	//				structureInfo.add(filedList);
 
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -258,10 +255,10 @@ public class DBDao {
 						}
 					}
 				}
-				tableList.setTables(structureInfo);
+//				tableList.setTables(structureInfo);
 			}
 		}
-		return structureInfo;
+		return null;
 
 	}
 
